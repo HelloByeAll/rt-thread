@@ -198,10 +198,17 @@ typedef struct msh_cmd_opt
     const char          *des;
 } msh_cmd_opt_t;
 
+#ifdef FINSH_OPTION_COMPLETION_ENABLED
 #define CMD_OPTIONS_STATEMENT(command) static struct msh_cmd_opt command##_msh_options[];
 #define CMD_OPTIONS_NODE_START(command) static struct msh_cmd_opt command##_msh_options[] = {
 #define CMD_OPTIONS_NODE(_id, _name, _des) {.id = _id, .name = #_name, .des = #_des},
 #define CMD_OPTIONS_NODE_END    {0},};
+#else
+#define CMD_OPTIONS_STATEMENT(command)
+#define CMD_OPTIONS_NODE_START(command)
+#define CMD_OPTIONS_NODE(_id, _name, _des)
+#define CMD_OPTIONS_NODE_END
+#endif
 
 extern struct finsh_syscall_item *global_syscall_list;
 extern struct finsh_syscall *_syscall_table_begin, *_syscall_table_end;
